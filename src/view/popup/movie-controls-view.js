@@ -1,25 +1,27 @@
 import { createElement } from '../../render.js';
 
-const movieControlsTemplate = () => `<section class="film-details__controls">
+const createMovieControlsTemplate = () => `<section class="film-details__controls">
 <button type="button" class="film-details__control-button film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
 <button type="button" class="film-details__control-button film-details__control-button--active film-details__control-button--watched" id="watched" name="watched">Already watched</button>
 <button type="button" class="film-details__control-button film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
 </section>`;
 
 export default class MovieControlsView {
-  getTemplate() {
-    return movieControlsTemplate();
+  #element = null;
+
+  get template() {
+    return createMovieControlsTemplate();
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
