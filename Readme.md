@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
-* Студент: [Руслан Гнатовский](https://up.htmlacademy.ru/ecmascript/18/user/2147281).
-* Наставник: `Дмитрий Железцов`.
+* Студент: [Константин Марюшин](https://up.htmlacademy.ru/ecmascript/18/user/2051829).
+* Наставник: `Rail Sakhaviev`.
 
 ---
 
@@ -48,5 +48,5 @@ git clone SSH-адрес_вашего_форка
 
 Репозиторий создан для обучения на профессиональном курсе «[JavaScript. Архитектура клиентских приложений](https://htmlacademy.ru/intensive/ecmascript)» от [HTML Academy](https://htmlacademy.ru).
 
-[check-image]: https://github.com/htmlacademy-ecmascript/2147281-cinemaddict-18/workflows/Project%20check/badge.svg?branch=master
-[check-url]: https://github.com/htmlacademy-ecmascript/2147281-cinemaddict-18/actions
+[check-image]: https://github.com/htmlacademy-ecmascript/2051829-cinemaddict-18/workflows/Project%20check/badge.svg?branch=master
+[check-url]: https://github.com/htmlacademy-ecmascript/2051829-cinemaddict-18/actions
