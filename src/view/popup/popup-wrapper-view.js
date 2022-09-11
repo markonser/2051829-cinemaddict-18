@@ -1,21 +1,24 @@
 import { createElement } from '../../render.js';
 
-const popupWrapperTemplate = () => '<section class="film-details"> </section>';
+const createPopupWrapperTemplate = () => '<section class="film-details"> </section>';
 
 export default class PopupWrapperView {
-  getTemplate() {
-    return popupWrapperTemplate();
+  #element = null;
+
+  get template() {
+    return createPopupWrapperTemplate();
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
+
