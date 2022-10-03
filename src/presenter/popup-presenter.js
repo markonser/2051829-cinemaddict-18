@@ -9,25 +9,38 @@ export default class PopupPresenter {
   #movie = null;
   #commentsModel = null;
   #onChangeData = null;
-  #moviesModel = null;
   #currentFilter = null;
+  #scrollPosition = null;
   #turnPopupClose = null;
+  #onDisableControllButtons = null;
   #movieDescriptionPresenter = null;
   #wrapperComponent = null;
   #contentComponent = null;
 
-  init(mainContainer, movie, commentsModel, onChangeData, moviesModel, currentFilter, turnPopupClose) {
+  get popupScrollPosition() {
+    return this.#wrapperComponent.scrollPosition;
+  }
+
+  get movie() {
+    return this.#movie;
+  }
+
+  set movie(value) {
+    this.#movie = value;
+  }
+
+  init(mainContainer, movie, commentsModel, onChangeData, currentFilter, scrollPosition, turnPopupClose, onDisableControllButtons) {
 
     this.#mainContainer = mainContainer;
     this.#movie = movie;
     this.#commentsModel = commentsModel;
     this.#onChangeData = onChangeData;
-    this.#moviesModel = moviesModel;
     this.#currentFilter = currentFilter;
+    this.#scrollPosition = scrollPosition;
     this.#turnPopupClose = turnPopupClose;
+    this.#onDisableControllButtons = onDisableControllButtons;
 
     this.#renderPopup();
-
   }
 
   #presentMovieDescription() {
@@ -38,15 +51,15 @@ export default class PopupPresenter {
       this.#commentsModel,
       this.#handlePopupCloseClick,
       this.#onChangeData,
-      this.#moviesModel,
-      this.#currentFilter
+      this.#currentFilter,
+      this.#onDisableControllButtons
     );
   }
 
   getMovieDescriptionPresenter = () => this.#movieDescriptionPresenter;
 
   #renderPopup() {
-    this.#wrapperComponent = new PopupWrapperView;
+    this.#wrapperComponent = new PopupWrapperView(this.#scrollPosition);
     this.#contentComponent = new PopupContentView;
 
     render(this.#wrapperComponent, this.#mainContainer);
@@ -55,23 +68,27 @@ export default class PopupPresenter {
     window.addEventListener('keydown', this.#onEscKeyDown);
 
     this.#presentMovieDescription();
+
+    this.#wrapperComponent.setScrollPosition();
   }
 
   clear() {
     this.#turnPopupClose();
     this.#movieDescriptionPresenter.removeAddCommentHandler();
+    this.#movieDescriptionPresenter.clearCommentObserver();
     remove(this.#wrapperComponent);
     window.removeEventListener('keydown', this.#onEscKeyDown);
-    document.querySelector('body').classList.remove('hide-overflow');
   }
 
   #handlePopupCloseClick = () => {
+    document.querySelector('body').classList.remove('hide-overflow');
     this.clear();
   };
 
   #onEscKeyDown = (evt) => {
     if (evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
+      document.querySelector('body').classList.remove('hide-overflow');
       this.clear();
     }
   };
