@@ -17,6 +17,8 @@ export default class MoviesListPresenter {
   #movieCardPresenters = new Map();
   #showMoreButtonPresenter = new ShowMoreButtonPresenter;
 
+  getMovieCardPresenters = () => this.#movieCardPresenters;
+  getShowMoreButtonPresenter = () => this.#showMoreButtonPresenter;
 
   init(mainContainer, movies, bodyNode, onChangeData, currentFilter, commentsModel, quantityOfRenderedMovies) {
 
@@ -80,8 +82,6 @@ export default class MoviesListPresenter {
     }
   };
 
-  getMovieCardPresenters = () => this.#movieCardPresenters;
-
   #presentShowMoreButton() {
     if (this.#movies.length > this.#quantityOfRenderedMovies) {
 
@@ -93,8 +93,6 @@ export default class MoviesListPresenter {
       );
     }
   }
-
-  getShowMoreButtonPresenter = () => this.#showMoreButtonPresenter;
 
   #removePreviousPopup = () => {
     const previousPopup = Array.from(this.#movieCardPresenters.values()).find((presenter) => presenter.isPopupOpen);

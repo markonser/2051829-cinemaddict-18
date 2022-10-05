@@ -21,7 +21,7 @@ const createMovieCommentTemplate = (userComment) => {
   </li>`;
 };
 
-export default class MovieCommentView extends AbstractView{
+export default class MovieCommentView extends AbstractView {
 
   #comment = null;
 
@@ -43,6 +43,11 @@ export default class MovieCommentView extends AbstractView{
     this.deleteButton.addEventListener('click', this.#deleteCommentClickHandler);
   }
 
+  handleActivationDeleteButton = () => {
+    this.deleteButton.textContent = 'Delete';
+    this.deleteButton.disabled = false;
+  };
+
   #deleteCommentClickHandler = (evt) => {
     evt.preventDefault();
     this.#disableDeleteButton();
@@ -54,8 +59,4 @@ export default class MovieCommentView extends AbstractView{
     this.deleteButton.disabled = true;
   }
 
-  handleActivationDeleteButton = () => {
-    this.deleteButton.textContent = 'Delete';
-    this.deleteButton.disabled = false;
-  };
 }

@@ -106,11 +106,9 @@ export default class ContentPresenter {
 
   #clearContent({ needSortTypeReset = false, needRemainRenderedMovie = false } = {}) {
 
-    if (needRemainRenderedMovie) {
-      this.#quantityOfRenderedMovies = this.#moviesListPresenter.getShowMoreButtonPresenter().quantityOfRenderedMovies;
-    } else {
-      this.#quantityOfRenderedMovies = MOVIES_PER_ROW;
-    }
+    needRemainRenderedMovie
+      ? this.#quantityOfRenderedMovies = this.#moviesListPresenter.getShowMoreButtonPresenter().quantityOfRenderedMovies
+      : this.#quantityOfRenderedMovies = MOVIES_PER_ROW;
 
     if (needSortTypeReset) {
       this.#currentSortType = SORT_TYPE.default;

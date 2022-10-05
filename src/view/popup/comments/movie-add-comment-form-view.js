@@ -55,24 +55,39 @@ export default class MovieAddCommentFormView extends AbstractStatefulView {
     return this.element.querySelector('.film-details__comment-input');
   }
 
-  static parseStateToComment = (state) => {
-    const comment = { ...state };
-
-    delete comment.emojiImgTemplate;
-    delete comment.error;
-
-    return comment;
-  };
-
-  static parseCommentToState = (comment) => ({
-    ...comment,
-    emojiImgTemplate: '',
-    error: ''
-  });
+  setAddCommentHandler(callback) {
+    this._callback.addComment = callback;
+    document.addEventListener('keyup', this.#addCommentHandler);
+  }
 
   #setHandlers() {
     this.emojiInputElements.forEach((item) => item.addEventListener('click', this.#choosingEmojiHandler));
     this.commentInputElement.addEventListener('input', this.#commentInputChangeHandler);
+  }
+
+  _restoreHandlers = () => {
+    this.#setHandlers();
+  };
+
+  removeAddCommentHandler() {
+    document.removeEventListener('keyup', this.#addCommentHandler);
+  }
+
+  handleResponseAfterAddComment(isError = null) {
+    if (!isError) {
+      this.updateElement({
+        comment: '',
+        emotion: '',
+        emojiImgTemplate: '',
+        error: ''
+      });
+    } else {
+      this.updateElement({
+        error: '<p> Can\'t do that right now, sorry! </p>'
+      });
+      this.#checkForActiveEmoji();
+    }
+    this.#disableFormDuringPosting(false);
   }
 
   #choosingEmojiHandler = (evt) => {
@@ -104,19 +119,6 @@ export default class MovieAddCommentFormView extends AbstractStatefulView {
     this._setState({ comment: evt.target.value });
   };
 
-  _restoreHandlers = () => {
-    this.#setHandlers();
-  };
-
-  setAddCommentHandler(callback) {
-    this._callback.addComment = callback;
-    document.addEventListener('keyup', this.#addCommentHandler);
-  }
-
-  removeAddCommentHandler() {
-    document.removeEventListener('keyup', this.#addCommentHandler);
-  }
-
   #disableFormDuringPosting(isDisabled) {
     this.removeAddCommentHandler();
     this.element.querySelectorAll('input, textarea').forEach((formEl) => {
@@ -141,22 +143,19 @@ export default class MovieAddCommentFormView extends AbstractStatefulView {
     }
   };
 
-  handleResponseAfterAddComment(isError = null) {
-    if (!isError) {
-      this.updateElement({
-        comment: '',
-        emotion: '',
-        emojiImgTemplate: '',
-        error: ''
-      });
-    } else {
-      this.updateElement({
-        error: '<p> Can\'t do that right now, sorry! </p>'
-      });
-      this.#checkForActiveEmoji();
-    }
-    this.#disableFormDuringPosting(false);
-  }
+  static parseStateToComment = (state) => {
+    const comment = { ...state };
 
+    delete comment.emojiImgTemplate;
+    delete comment.error;
+
+    return comment;
+  };
+
+  static parseCommentToState = (comment) => ({
+    ...comment,
+    emojiImgTemplate: '',
+    error: ''
+  });
 }
 
